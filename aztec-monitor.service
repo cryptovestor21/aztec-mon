@@ -1,0 +1,16 @@
+[Unit]
+Description=Aztec Sequencer Monitoring Script
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/aztec-monitor
+EnvironmentFile=/opt/aztec-monitor/.env
+ExecStart=/opt/aztec-monitor/aztec-monitor.sh
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
