@@ -98,6 +98,20 @@ sudo systemctl restart aztec-monitor
 
 ---
 
+## ❌ Remove aztec-mon
+```bash
+sudo chmod +x /opt/aztec-monitor/uninstall.sh
+bash uninstall.sh
+```
+
+This will:
+
+* Stop and disable the systemd service
+
+* Delete /opt/aztec-monitor
+
+* Remove the systemd unit
+
 ## 📄 License
 
 MIT
