@@ -1,0 +1,24 @@
+# .gitignore
+
+# VSCode project files
+*.code-workspace
+.vscode/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+aztec-monitor.log
+
+# Systemd logs and junk
+*.pid
+*.sock
+
+# Secrets and environment files
+.env
+
+# Python cache (if ever used)
+__pycache__/
+*.py[cod]
