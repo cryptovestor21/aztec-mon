@@ -104,9 +104,3 @@ sudo systemctl restart aztec-monitor
 
 MIT
 
-```
-
----
-
-Would you like me to help you commit and push the changes for this too?
-```
