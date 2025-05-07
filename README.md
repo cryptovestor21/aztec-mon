@@ -1,5 +1,3 @@
-### 📄 `README.md`
-
 # Aztec Node Monitor
 
 🛡️ Simple systemd-based monitoring script for an Aztec sequencer node. Sends Discord alerts when block production stalls.
