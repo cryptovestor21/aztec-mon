@@ -1,8 +1,8 @@
 #!/bin/bash
 
 HOST="http://localhost:8080"
-CHECK_INTERVAL=60
-STALE_THRESHOLD=300
+CHECK_INTERVAL=60         # Default: check every 60 seconds
+STALE_THRESHOLD=300       # Default: alert if block hasn't moved in 5 minutes
 
 DISCORD_WEBHOOK="${DISCORD_WEBHOOK:-}"
 TEST_ALERT="${TEST_ALERT:-false}"
@@ -26,7 +26,7 @@ get_current_block_number() {
     "$HOST" | jq -r '.result.latest.number'
 }
 
-# Configure test behavior
+# Handle test mode configuration
 if [[ "$TEST_ALERT" == "true" ]]; then
   CHECK_INTERVAL=5
   STALE_THRESHOLD=5
@@ -47,6 +47,7 @@ else
   fi
 fi
 
+# Main monitoring loop
 while true; do
   block_number=$(get_current_block_number)
 
@@ -63,10 +64,15 @@ while true; do
       elapsed=$((now - last_update_time))
 
       if (( elapsed >= STALE_THRESHOLD )); then
-        msg="🚨 ${TEST_ALERT:+[TEST ALERT] }Aztec Node block stuck at $block_number for $((elapsed)) seconds! Host: \`$HOSTNAME\`"
+        if [[ "$TEST_ALERT" == "true" ]]; then
+          msg="🚨 [TEST ALERT] Aztec Node block stuck at $block_number for $((elapsed)) seconds! Host: \`$HOSTNAME\`"
+        else
+          msg="🚨 Aztec Node block stuck at $block_number for $((elapsed)) seconds! Host: \`$HOSTNAME\`"
+        fi
+
         echo "$(date) - $msg"
         send_discord_alert "$msg"
-        sleep $STALE_THRESHOLD
+        sleep $STALE_THRESHOLD  # avoid repeated alerts
       fi
     fi
   fi
